@@ -9,21 +9,15 @@ import { ethers } from 'ethers';
 import Moralis from 'moralis';
 import { EvmChain } from '@moralisweb3/common-evm-utils';
 
-const Fighter = (fighter) => {
-  const [stats, setStats] = useState([]);
+const Fighter = ({fighter}) => {
+
   const { address } = useAccount()
-  
-  const contractRead = useContractRead({
+  const {data: stats} = useContractRead({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
     functionName: 'getFighterStats',
     args: [ethers.BigNumber.from(fighter.id ?? 0)],
   })
-  console.log(ethers.BigNumber.from(fighter.id ?? 0));
-
-  console.log(contractRead);
-
-
 
   const { config } = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
@@ -31,13 +25,29 @@ const Fighter = (fighter) => {
     functionName: 'fight'
   });
 
+  console.log(fighter.minter_address, address);
   const { data, isLoading, isSuccess, write } = useContractWrite(config)
-
-
 
   return ( 
     <div className={css.card}>
       <img src={fighter.token_uri} className={css.image}/>
+      <div className={css.stats}>
+        <Typography align="center" variant="h5"> STRENGTH <b>{stats.strength}</b></Typography>
+        <Typography align="center" variant="h5"> STAMINA <b>{stats.stamina}</b></Typography>
+        <Typography align="center" variant="h5"> TECHNIQUE <b>{stats.technique}</b></Typography>
+        <hr/>
+        <Typography align="center" variant="h5"> VICTORIES <b>{stats.victories}</b></Typography>
+        <br/>
+      </div>
+
+      <div style={{justifyContent: 'center', display: "flex"}}>
+        <Button 
+          variant="contained"
+          disabled={address?.toLowerCase() === fighter.minter_address.toLowerCase()}
+        >
+          Fight
+        </Button>
+      </div>
     </div>
   );
 };

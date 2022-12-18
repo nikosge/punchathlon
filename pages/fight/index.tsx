@@ -43,22 +43,16 @@ const Fight: NextPage = () => {
     setFighters(res.result)
   }
 
-  const { config } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: 'join'
-  });
-
-  const { data, isLoading, isSuccess, write } = useContractWrite(config)
-
   return ( 
     <div className={css.root}>
       <div className={css.container}>
         <Typography>Fighters</Typography>
+        <br/><br/>
         { fighters.length > 0 
           ?
             fighters.map ( fighter =>
               <Fighter
+                id={fighter.id}
                 fighter={fighter}
               />
             )
