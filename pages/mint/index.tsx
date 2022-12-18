@@ -21,7 +21,7 @@ const Mint: NextPage = () => {
   const [images, setImages] = useState<ImagesResponseDataInner[]>([])
 
   const oai = useRef(new OpenAIApi(new Configuration({
-    organization: "org-QSeiWUv21jjZOahwJ8IjepUA",
+    // organization: "org-QSeiWUv21jjZOahwJ8IjepUA",
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   })))
 
@@ -182,8 +182,8 @@ const Mint: NextPage = () => {
         <div>
           <br/>
           <Typography> Your fighter is being minted </Typography>
-          <Typography>  Transaction:  <a style={{color: "#4ba9af"}} href={`https://mumbai.polygonscan.com/tx/${JSON.stringify(data)}`}>
-              {JSON.stringify(data)}
+          <Typography>  Transaction:  <a style={{color: "#4ba9af"}} href={`https://mumbai.polygonscan.com/tx/${data.hash}`}>
+              {data.hash}
             </a>
           </Typography>
         </div>
