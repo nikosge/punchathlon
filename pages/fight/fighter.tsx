@@ -52,7 +52,7 @@ const Fighter = ({fighter, user}) => {
       <div style={{justifyContent: 'center', display: "flex"}}>
         <Button 
           variant="contained"
-          disabled={address?.toLowerCase() !== fighter.minter_address?.toLowerCase()}
+          disabled={address?.toLowerCase() === fighter.minter_address?.toLowerCase()}
           onClick={fight}
         >
           Fight
