@@ -48,17 +48,21 @@ const Fight: NextPage = () => {
       <div className={css.container}>
         <Typography>Fighters</Typography>
         <br/><br/>
+
         { fighters.length > 0 
           ?
-            fighters.map ( fighter =>
+          <div style={{display: 'flex', flex:1, justifyContent: 'space-around'}}>
+            {
+            fighters.map ( fighter => 
               <Fighter
                 id={fighter.id}
                 fighter={fighter}
               />
-            )
+            )}
+            </div>
           : 
-            <div style={{display: 'flex', flex:1,  flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-              <Typography>
+          <div style={{display: 'flex', flex:1,  flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+          <Typography>
                 No fighters found yet.
               </Typography>
               <Button onClick={() => router.push('/mint')}>
