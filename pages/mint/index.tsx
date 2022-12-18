@@ -29,7 +29,7 @@ const Mint: NextPage = () => {
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
     functionName: 'mint',
-    args: ["Judo", images],
+    args: ["Judo", "https://oaidalleapiprodscus.blob.core.windows.net/private/org-VRpf7xj3xFII0I4O9QQxdLnz/user-29wJJuLmNEdwAEb6pby27pKy/img-py8KqrOJlUzHBwIY6KRFmwiZ.png?st=2022-12-18T13%3A17%3A09Z&se=2022-12-18T15%3A17%3A09Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-18T05%3A26%3A23Z&ske=2022-12-19T05%3A26%3A23Z&sks=b&skv=2021-08-06&sig=YZQ/ZNbRBRbRVWnApzKpRMQsV9266%2Bx7WK6m/qvgT9M%3D"],
     overrides: {
       value: ethers.utils.parseEther('0.01'),
     },

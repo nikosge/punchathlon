@@ -9,44 +9,43 @@ import { ethers } from 'ethers';
 import Moralis from 'moralis';
 import { EvmChain } from '@moralisweb3/common-evm-utils';
 
-const Fighter = ({fighter}) => {
-
+const Fighter = ({fighter, user}) => {
+  const [outcome, setOutcome] = useState();
   const { address } = useAccount()
   const {data: stats} = useContractRead({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
     functionName: 'getFighterStats',
-    args: [ethers.BigNumber.from(fighter.id ?? 0)],
+    args: [ethers.BigNumber.from(fighter.token_id ?? 0)],
   })
 
-  const { config } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: 'fight'
-  });
 
   console.log(fighter.minter_address, address);
-  const { data, isLoading, isSuccess, write } = useContractWrite(config)
+  const {data} = useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: 'fight',
+    args: [user.token_id, fighter.token_id],
+  })
 
   const fight = () => {
-    console.log(write);
-    write?.({
-      recklesslySetUnpreparedArgs: [
-        fighter.id,
-        fighter.id
-      ]
-    })
+    const winner = data.toNumber();
+    console.log(winner, user.token_id, fighter.token_id);
+    setOutcome(winner == user.token_id ? "WON" : "LOST");
+    setTimeout( () => {
+      setOutcome()
+    }, 5000)
   }
 
   return ( 
     <div className={css.card}>
       <img src={fighter.token_uri} className={css.image}/>
       <div className={css.stats}>
-        <Typography align="center" variant="h5"> STRENGTH <b>{stats.strength}</b></Typography>
-        <Typography align="center" variant="h5"> STAMINA <b>{stats.stamina}</b></Typography>
-        <Typography align="center" variant="h5"> TECHNIQUE <b>{stats.technique}</b></Typography>
+        <Typography align="center" variant="h5"> STRENGTH <b>{stats?.strength}</b></Typography>
+        <Typography align="center" variant="h5"> STAMINA <b>{stats?.stamina}</b></Typography>
+        <Typography align="center" variant="h5"> TECHNIQUE <b>{stats?.technique}</b></Typography>
         <hr/>
-        <Typography align="center" variant="h5"> VICTORIES <b>{stats.victories}</b></Typography>
+        <Typography align="center" variant="h5"> VICTORIES <b>{stats?.victories}</b></Typography>
         <br/>
       </div>
 
@@ -58,7 +57,16 @@ const Fighter = ({fighter}) => {
         >
           Fight
         </Button>
+
       </div>
+      <div>
+          { outcome && 
+          
+            <Typography>{outcome}</Typography>
+          }
+
+        </div>
+
     </div>
   );
 };

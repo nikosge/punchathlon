@@ -15,6 +15,7 @@ import Fighter from './fighter';
 
 const Fight: NextPage = () => {
   const [fighters, setFighters] = useState([]);
+  const [userFighter, setUserFighter] = useState();
   const { address: user } = useAccount()
   const router = useRouter();
   
@@ -40,6 +41,7 @@ const Fight: NextPage = () => {
     const fighters = res.result;
 
     // const mine = fighters?.filter()
+    setUserFighter(fighters.find(f => f.minter_address?.toLowerCase() === user?.toLowerCase()));
     setFighters(res.result)
   }
 
@@ -55,7 +57,8 @@ const Fight: NextPage = () => {
             {
             fighters.map ( fighter => 
               <Fighter
-                id={fighter.id}
+                key={fighter.token_id}
+                user={userFighter}
                 fighter={fighter}
               />
             )}
