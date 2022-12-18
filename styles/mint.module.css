@@ -1,0 +1,33 @@
+
+.root {
+  padding: 10px 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  flex-direction: column;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  padding: 20px;
+  width: 900px;
+  min-height: 400px;
+  background: white;
+}
+
+.image {
+  height: 300px;
+  width: auto;
+}
+
+.imageContainer {
+  display: flex;
+}
