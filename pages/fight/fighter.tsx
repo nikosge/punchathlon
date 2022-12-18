@@ -28,6 +28,16 @@ const Fighter = ({fighter}) => {
   console.log(fighter.minter_address, address);
   const { data, isLoading, isSuccess, write } = useContractWrite(config)
 
+  const fight = () => {
+    console.log(write);
+    write?.({
+      recklesslySetUnpreparedArgs: [
+        fighter.id,
+        fighter.id
+      ]
+    })
+  }
+
   return ( 
     <div className={css.card}>
       <img src={fighter.token_uri} className={css.image}/>
@@ -43,7 +53,8 @@ const Fighter = ({fighter}) => {
       <div style={{justifyContent: 'center', display: "flex"}}>
         <Button 
           variant="contained"
-          disabled={address?.toLowerCase() === fighter.minter_address.toLowerCase()}
+          disabled={address?.toLowerCase() !== fighter.minter_address.toLowerCase()}
+          onClick={fight}
         >
           Fight
         </Button>

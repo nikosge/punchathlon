@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import type { NextPage } from 'next';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi'
-import {Button, TextField, MenuItem} from '@mui/material';
+import {Button, TextField, MenuItem, Typography} from '@mui/material';
 import { Configuration, ImagesResponseDataInner, OpenAIApi } from "openai";
 import abi from "../../config/abi.json";
 import css from "../../styles/mint.module.css";
@@ -167,7 +167,7 @@ const Mint: NextPage = () => {
           Mint
       </Button>
 
-      <div className={css.imageContainer}>
+      {/* <div className={css.imageContainer}>
 
         { images.length > 0 && 
           images.map( (img: any) => 
@@ -175,10 +175,19 @@ const Mint: NextPage = () => {
           )
 
         }
-      </div>
+      </div> */}
 
       {isLoading && <div>Check Wallet</div>}
-      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      {isSuccess && 
+        <div>
+          <br/>
+          <Typography> Your fighter is being minted </Typography>
+          <Typography>  Transaction:  <a style={{color: "#4ba9af"}} href={`https://mumbai.polygonscan.com/tx/${JSON.stringify(data)}`}>
+              {JSON.stringify(data)}
+            </a>
+          </Typography>
+        </div>
+      }
     </div>
   );
 };
